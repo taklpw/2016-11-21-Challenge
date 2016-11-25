@@ -1,11 +1,10 @@
 # Author: Kelly Lynch
-# Date: 2016-11-24
+# Date: 2016-11-25
 # Description: Learning Python, doing Reddit challenges at https://www.reddit.com/r/dailyprogrammer/
 # Challenge: https://www.reddit.com/r/dailyprogrammer/comments/5e4mde/20161121_challenge_293_easy_defusing_the_bomb/
 
+
 # Function to create an array of user inputs of colours in order in which they are cut.
-
-
 def getinput():
     # Variable Declarations
     validinputs = ['white', 'red', 'black', 'orange', 'green', 'purple', 'q']
@@ -46,15 +45,62 @@ def getinput():
     for colour in colourlist:
         if colour != 'q':
             print colour
+    print "\n Status:"
 
     return colourlist
 
 
 # Function to determine if the bomb is sucessfully disarmed or exploded.
-# TODO: Determine if colour list is valid or not
 def disarm(passedcolours):
-    print "boom"
-    print "disarmed"
+    # Variables
+    exploded = 0
+
+    for i in range(len(passedcolours)-1):
+        current = passedcolours[i]
+        following = passedcolours[i + 1]
+
+        # State Machine
+        # Exit possibilities
+        if len(passedcolours)-1 == i:
+            if passedcolours[i] == 'red' or passedcolours[i] == 'green' or passedcolours[i] == 'purple':
+                print "Boom"
+                exploded = 1
+
+        if exploded == 0 or i != len(passedcolours)-1:
+            # Non exit possibilites
+            if current == 'white':
+                if following == 'black' or following == 'white':
+                    print "Boom"
+                    exploded = 1
+
+            if current == 'red':
+                if following != 'green':
+                    print "Boom"
+                    exploded = 1
+
+            if current == 'black':
+                if following == 'white' or following == 'orange' or following == 'green':
+                    print "Boom"
+                    exploded = 1
+
+            if current == 'orange':
+                if following == 'white' or following == 'orange' or following == 'green' or following == 'purple':
+                    print "Boom"
+                    exploded = 1
+
+            if current == 'green':
+                if following == 'red' or following == 'black' or following == 'green' or following == 'purple':
+                    print "Boom"
+                    exploded = 1
+
+            if current == 'purple':
+                if following == 'white' or following == 'orange' or following == 'green' or following == 'orange' or following == 'purple':
+                    print "Boom"
+                    exploded = 1
+
+    # Bomb Defused if not exploded yet
+    if exploded == 0:
+        print "Bomb defused"
 
 
 disarm(getinput())
