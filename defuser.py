@@ -45,16 +45,13 @@ def getinput():
     for colour in colourlist:
         if colour != 'q':
             print colour
-    print "\n Status:"
+    print "\nStatus:"
 
     return colourlist
 
 
 # Function to determine if the bomb is sucessfully disarmed or exploded.
 def disarm(passedcolours):
-    # Variables
-    exploded = 0
-
     for i in range(len(passedcolours)-1):
         current = passedcolours[i]
         following = passedcolours[i + 1]
@@ -63,44 +60,37 @@ def disarm(passedcolours):
         # Exit possibilities
         if len(passedcolours)-1 == i:
             if passedcolours[i] == 'red' or passedcolours[i] == 'green' or passedcolours[i] == 'purple':
-                print "Boom"
-                exploded = 1
+                return "Boom"
 
-        if exploded == 0 or i != len(passedcolours)-1:
+        if i != len(passedcolours)-1:
             # Non exit possibilites
             if current == 'white':
                 if following == 'black' or following == 'white':
-                    print "Boom"
-                    exploded = 1
+                    return "Boom"
 
             if current == 'red':
                 if following != 'green':
-                    print "Boom"
-                    exploded = 1
+                    return "Boom"
 
             if current == 'black':
                 if following == 'white' or following == 'orange' or following == 'green':
-                    print "Boom"
-                    exploded = 1
+                    return "Boom"
 
             if current == 'orange':
                 if following == 'white' or following == 'orange' or following == 'green' or following == 'purple':
-                    print "Boom"
-                    exploded = 1
+                    return "Boom"
 
             if current == 'green':
                 if following == 'red' or following == 'black' or following == 'green' or following == 'purple':
-                    print "Boom"
-                    exploded = 1
+                    return "Boom"
 
             if current == 'purple':
                 if following == 'white' or following == 'orange' or following == 'green' or following == 'orange' or following == 'purple':
-                    print "Boom"
-                    exploded = 1
+                    return "Boom"
 
     # Bomb Defused if not exploded yet
     if exploded == 0:
-        print "Bomb defused"
+        return "Bomb defused"
 
 
-disarm(getinput())
+print disarm(getinput())
